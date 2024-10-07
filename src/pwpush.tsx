@@ -18,9 +18,8 @@ export default function Command() {
   const [hasSeenPrompt, setHasSeenPrompt] = useState<boolean>(false);
   const preferences = getPreferenceValues<Preferences>(); // Get stored preferences (server URL, API key)
 
-  // Set default server URL and API key (PwPush public version)
+  // Set default server URL (PwPush public version)
   const defaultServerUrl = "https://pwpush.com";
-  const defaultApiKey = ""; // Public PwPush doesn't require an API key
 
   // Check if the user has already been prompted about the preferences
   useEffect(() => {
@@ -45,14 +44,10 @@ export default function Command() {
       return;
     }
 
-    // Use the preferences for server URL and API key, or default to the public service
+    // Use the preferences for server URL or default to the public service
     const finalServerUrl = preferences.serverUrl && preferences.serverUrl.length > 0
       ? preferences.serverUrl
       : defaultServerUrl;
-
-    const finalApiKey = preferences.apiKey && preferences.apiKey.length > 0
-      ? preferences.apiKey
-      : defaultApiKey;
 
     const baseUrl = `${finalServerUrl}/p.json`;
 
@@ -67,9 +62,10 @@ export default function Command() {
     // Set headers if an API key is provided
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
+      "Accept": "application/json",
     };
-    if (finalApiKey && finalApiKey.length > 0) {
-      headers["Authorization"] = `Token token=${finalApiKey}`;
+    if (preferences.apiKey && preferences.apiKey.length > 0) {
+      headers["Authorization"] = `Bearer ${preferences.apiKey}`;
     }
 
     try {
@@ -84,7 +80,7 @@ export default function Command() {
       }
 
       const result = await response.json();
-      const pushUrl = `${finalServerUrl}/p/${result.url_token}`;
+      const pushUrl = result.html_url || `${finalServerUrl}/p/${result.url_token}`;
 
       // Copy the URL to the clipboard
       await Clipboard.copy(pushUrl);
