@@ -6,6 +6,7 @@ type PwPushFormValues = {
   password: string;
   expireAfterDays?: string;
   expireAfterViews?: string;
+  note?: string;  // New note field for reference
 };
 
 interface Preferences {
@@ -37,7 +38,7 @@ export default function Command() {
   }, []);
 
   async function handleSubmit(values: PwPushFormValues) {
-    const { password, expireAfterDays, expireAfterViews } = values;
+    const { password, expireAfterDays, expireAfterViews, note } = values;
 
     if (!password) {
       push(<Detail markdown="### Error\n\nPassword is required!" />);
@@ -56,6 +57,7 @@ export default function Command() {
         payload: password,
         expire_after_days: parseInt(expireAfterDays || "1"),
         expire_after_views: parseInt(expireAfterViews || "10"),
+        note: note || "",  // Include the note field if provided
       },
     };
 
@@ -104,9 +106,10 @@ export default function Command() {
         </ActionPanel>
       }
     >
-      <Form.PasswordField id="password" title="Password" placeholder="Enter your password" />
+      <Form.TextField id="password" title="Password" placeholder="Enter your password" />
       <Form.TextField id="expireAfterDays" title="Expire After Days (optional)" placeholder="1" />
       <Form.TextField id="expireAfterViews" title="Expire After Views (optional)" placeholder="10" />
+      <Form.TextField id="note" title="Note (optional)" placeholder="Enter a note for reference" />  {/* Note field */}
     </Form>
   );
 }
