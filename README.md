@@ -7,9 +7,10 @@ At first start you are asked for the URL and API key, if nothing is provided, th
 1. Download the package as a zip and extract (the files will remain there, so maybe chose a "final" destination)
 2. Open Raycast and type "Import Extension"
 3. Select the folder and import
-4. Run the “developer commands” to build the extension
-   On macOS, using the terminal, navigate to the pwpsh folder and execute `npm install && npm run dev`
-5. You should be able to use the command "pwpush"
+4. If you don't have NPM installed, use Homebrew (https://brew.sh) - Install homebrew and then `brew install npm`
+5. Run the “developer commands” - using the terminal, navigate to the pwpsh folder and execute `npm install && npm run dev`
+6. You should be able to use the command "pwpush"
+
 
 ### Configuration
 
