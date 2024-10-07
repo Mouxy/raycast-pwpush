@@ -10,8 +10,3 @@ At first start you are asked for the URL and API key, if nothing is provided, th
 4. Run the “developer commands” to build the extension
    On macOS, using the terminal, navigate to the pwpsh folder and execute `npm install && npm run dev`
 5. You should be able to use the command "pwpush"
-
-### Configuration
-
-If you use a Self-Hosted version, add your URL https://push.domain.com and the API Key.
-For Pro/Premium accounts, leave the URL empty and add your personal API key (https://pwpush.com/api_tokens). The custom URL will be grabbed automatically.
